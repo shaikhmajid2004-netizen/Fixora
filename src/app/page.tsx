@@ -1,3 +1,7 @@
+import Testimonials from "@/components/home/Testimonials";
+import Stats from "@/components/home/Stats";
+import WhyChoose from "@/components/home/WhyChoose";
+import Services from "@/components/home/Services";
 import Navbar from "@/components/layout/Navbar";
 import Hero from "@/components/home/Hero";
 
@@ -6,6 +10,10 @@ export default function Home() {
     <>
       <Navbar />
       <Hero />
+      <Services />
+      <WhyChoose />
+      <Stats />
+      <Testimonials />
     </>
   );
 }
