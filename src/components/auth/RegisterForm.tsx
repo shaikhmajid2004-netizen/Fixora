@@ -1,12 +1,66 @@
 "use client";
-
+import { toast } from "sonner";
 import { useState } from "react";
 
 export default function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({
+  firstName: "",
+  lastName: "",
+  email: "",
+  phone: "",
+  password: "",
+  role: "customer",
+});
 
+const [loading, setLoading] = useState(false);
+const handleChange = (
+  e: React.ChangeEvent<HTMLInputElement>
+) => {
+  setFormData({
+    ...formData,
+    [e.target.name]: e.target.value,
+  });
+};
+const handleSubmit = async (
+  e: React.FormEvent<HTMLFormElement>
+) => {
+  e.preventDefault();
+
+  setLoading(true);
+
+try {
+  const response = await fetch("/api/auth/register", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  });
+
+  const data = await response.json();
+
+  if (response.ok) {
+    toast.success("Welcome to Fixora! 🎉", {
+  description: "Your account has been created successfully.",
+});
+    console.log(data);
+  } else {
+   toast.error("Registration Failed", {
+  description: data.message || "Please try again.",
+});
+  }
+} catch (error) {
+  console.error(error);
+  toast.error("Server Error", {
+  description: "Something went wrong. Please try again.",
+});
+} finally {
+  setLoading(false);
+}
+};
   return (
-    <form className="space-y-5">
+    <form onSubmit={handleSubmit} className="space-y-5">
 
       <div className="grid gap-5 md:grid-cols-2">
 
@@ -17,6 +71,9 @@ export default function RegisterForm() {
 
           <input
             type="text"
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleChange}
             placeholder="Abdul"
             className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-200"
           />
@@ -29,6 +86,9 @@ export default function RegisterForm() {
 
           <input
             type="text"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
             placeholder="Majid"
             className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-200"
           />
@@ -43,6 +103,9 @@ export default function RegisterForm() {
 
         <input
           type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
           placeholder="you@example.com"
           className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-200"
         />
@@ -55,6 +118,9 @@ export default function RegisterForm() {
 
         <input
           type="tel"
+          name="phone"
+          value={formData.phone}
+          onChange={handleChange}
           placeholder="+91 XXXXX XXXXX"
           className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-200"
         />
@@ -69,6 +135,9 @@ export default function RegisterForm() {
 
           <input
             type={showPassword ? "text" : "password"}
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
             placeholder="Create a password"
             className="w-full rounded-xl border border-slate-300 px-4 py-3 pr-16 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-200"
           />
@@ -98,7 +167,7 @@ export default function RegisterForm() {
         type="submit"
         className="w-full rounded-xl bg-blue-600 py-3 font-semibold text-white transition hover:bg-blue-700"
       >
-        Create Account
+        {loading ? "Creating Account..." : "Create Account"}
       </button>
 
       <p className="text-center text-sm text-slate-600">

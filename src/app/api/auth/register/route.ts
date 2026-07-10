@@ -19,7 +19,14 @@ export async function POST(request: Request) {
       );
     }
 
-    const { name, email, password, role } = result.data;
+   const {
+  firstName,
+  lastName,
+  email,
+  phone,
+  password,
+  role,
+} = result.data;
 
     // Check if email already exists
     const existingUser = await prisma.user.findUnique({
@@ -44,23 +51,20 @@ export async function POST(request: Request) {
     // Save user
     const user = await prisma.user.create({
       data: {
-        name,
-        email,
-        password: hashedPassword,
-        role,
-      },
+  firstName,
+  lastName,
+  email,
+  phone,
+  password: hashedPassword,
+  role,
+},
     });
 
     return NextResponse.json(
       {
         success: true,
         message: "User registered successfully",
-        user: {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          role: user.role,
-        },
+        
       },
       { status: 201 }
     );
