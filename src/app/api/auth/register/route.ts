@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import bcrypt from "bcrypt";
+import { prisma } from "@/lib/prisma";
 import { registerSchema } from "@/lib/validation/register";
 
 export async function POST(request: Request) {
@@ -17,12 +19,54 @@ export async function POST(request: Request) {
       );
     }
 
-    return NextResponse.json({
-      success: true,
-      data: result.data,
+    const { name, email, password, role } = result.data;
+
+    // Check if email already exists
+    const existingUser = await prisma.user.findUnique({
+      where: {
+        email,
+      },
     });
 
-  } catch {
+    if (existingUser) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Email already exists",
+        },
+        { status: 409 }
+      );
+    }
+
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Save user
+    const user = await prisma.user.create({
+      data: {
+        name,
+        email,
+        password: hashedPassword,
+        role,
+      },
+    });
+
+    return NextResponse.json(
+      {
+        success: true,
+        message: "User registered successfully",
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+        },
+      },
+      { status: 201 }
+    );
+  } catch (error) {
+    console.error(error);
+
     return NextResponse.json(
       {
         success: false,
@@ -31,11 +75,4 @@ export async function POST(request: Request) {
       { status: 500 }
     );
   }
-}
-
-export async function GET() {
-  return NextResponse.json({
-    success: true,
-    message: "Fixora Register API is working 🚀",
-  });
 }
