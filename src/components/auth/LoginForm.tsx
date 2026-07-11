@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useState } from "react";
@@ -44,9 +45,12 @@ console.log(data);
 setTimeout(() => {
   router.push("/dashboard");
 }, 1200);
-    } finally {
-      setLoading(false);
-    }
+    } catch (error) {
+  console.error(error);
+  toast.error("Something went wrong. Please try again.");
+} finally {
+  setLoading(false);
+}
   }
 
   return (
@@ -133,12 +137,12 @@ setTimeout(() => {
 
       <p className="text-center text-sm text-slate-600">
         Don&apos;t have an account?{" "}
-        <a
-          href="/register"
-          className="font-semibold text-blue-600 hover:underline"
-        >
-          Create Account
-        </a>
+        <Link
+         href="/register"
+         className="font-semibold text-blue-600 hover:underline"
+>
+         Create Account
+        </Link>
       </p>
 
     </form>
