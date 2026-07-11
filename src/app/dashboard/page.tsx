@@ -1,3 +1,4 @@
+import HeroBanner from "@/components/dashboard/HeroBanner";
 import StatsCard from "@/components/dashboard/cards/StatsCard";
 import {
   CalendarDays,
@@ -12,6 +13,7 @@ export default function DashboardPage() {
     <main className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white">
       <div className="mx-auto max-w-7xl px-6 py-10">
         <DashboardHeader />
+        <HeroBanner />
         <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
 
   <StatsCard

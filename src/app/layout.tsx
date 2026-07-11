@@ -1,6 +1,7 @@
+import "./globals.css";
 import { Toaster } from "sonner";
 import type { Metadata } from "next";
-import "@fontsource/plus-jakarta-sans";
+import "@fontsource/plus-jakarta-sans/index.css";
 
 export const metadata: Metadata = {
   title: "Fixora | One Platform. Every Service.",
