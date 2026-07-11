@@ -77,3 +77,19 @@ textarea,
 select {
   transition: var(--transition);
 }
+/* ===========================
+   FIXORA DESIGN SYSTEM
+=========================== */
+
+:root {
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-lg: 24px;
+
+  --shadow-sm: 0 4px 12px rgba(15,23,42,.06);
+  --shadow-md: 0 12px 32px rgba(15,23,42,.10);
+  --shadow-lg: 0 20px 60px rgba(15,23,42,.16);
+
+  --transition-fast: 180ms ease;
+  --transition-normal: 250ms ease;
+}
