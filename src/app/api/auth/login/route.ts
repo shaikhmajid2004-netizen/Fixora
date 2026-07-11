@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import { prisma } from "@/lib/prisma";
 import { loginSchema } from "@/lib/validation/login";
 import { createToken } from "@/lib/auth";
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -53,37 +54,41 @@ export async function POST(request: Request) {
         { status: 401 }
       );
     }
+
+    // Create JWT
     const token = await createToken({
-    id: user.id,
-    email: user.email,
-    role: user.role,
-});
-
-    const response = NextResponse.json(
-  {
-    success: true,
-    message: "Login successful",
-    user: {
       id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
       email: user.email,
-      phone: user.phone,
       role: user.role,
-    },
-  },
-  { status: 200 }
-);
+    });
 
-response.cookies.set("token", token, {
-  httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
-  sameSite: "lax",
-  maxAge: 60 * 60 * 24 * 7,
-  path: "/",
-});
+    // Create response
+    const response = NextResponse.json(
+      {
+        success: true,
+        message: "Login successful",
+        user: {
+          id: user.id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+          phone: user.phone,
+          role: user.role,
+        },
+      },
+      { status: 200 }
+    );
 
-return response;
+    // Set secure cookie
+    response.cookies.set("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 60 * 60 * 24 * 7,
+      path: "/",
+    });
+
+    return response;
   } catch (error) {
     console.error(error);
 
