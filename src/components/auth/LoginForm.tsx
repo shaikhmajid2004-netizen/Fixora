@@ -1,10 +1,12 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import FixoraButton from "@/components/ui/FixoraButton";
 
 export default function LoginForm() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -39,6 +41,9 @@ if (!response.ok) {
 toast.success("Welcome back to Fixora! 🎉");
 
 console.log(data);
+setTimeout(() => {
+  router.push("/dashboard");
+}, 1200);
     } finally {
       setLoading(false);
     }
