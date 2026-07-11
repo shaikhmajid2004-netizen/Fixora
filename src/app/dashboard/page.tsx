@@ -1,16 +1,10 @@
+import DashboardHeader from "@/components/dashboard/DashboardHeader";
+
 export default function DashboardPage() {
   return (
-    <main className="min-h-screen bg-slate-950 text-white flex items-center justify-center">
-      <div className="text-center">
-        <h1 className="text-5xl font-bold">Welcome to Fixora 🚀</h1>
-
-        <p className="mt-4 text-slate-300">
-          Authentication successful.
-        </p>
-
-        <p className="mt-2 text-slate-500">
-          Dashboard development starts here.
-        </p>
+    <main className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white">
+      <div className="mx-auto max-w-7xl px-6 py-10">
+        <DashboardHeader />
       </div>
     </main>
   );

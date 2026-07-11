@@ -21,7 +21,7 @@ export default function LoginForm() {
 
     try {
       // Login API integration will be added in next step.
-      const response = await fetch("/api/auth/login", {
+    const response = await fetch("/api/auth/login", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
@@ -32,19 +32,13 @@ export default function LoginForm() {
   }),
 });
 
-const data = await response.json();
+console.log("Status:", response.status);
+console.log("Content-Type:", response.headers.get("content-type"));
 
-if (!response.ok) {
-  toast.error(data.message || "Login failed");
-  return;
-}
+const text = await response.text();
+console.log("Response:", text);
 
-toast.success("Welcome back to Fixora! 🎉");
-
-console.log(data);
-setTimeout(() => {
-  router.push("/dashboard");
-}, 1200);
+return;
     } catch (error) {
   console.error(error);
   toast.error("Something went wrong. Please try again.");
