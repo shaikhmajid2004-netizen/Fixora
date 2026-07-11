@@ -1,6 +1,8 @@
 "use client";
+import FixoraButton from "@/components/ui/FixoraButton";
 import { toast } from "sonner";
 import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -60,10 +62,9 @@ try {
 }
 };
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
+    <form onSubmit={handleSubmit} className="space-y-6">
 
-      <div className="grid gap-5 md:grid-cols-2">
-
+      <div className="grid gap-6 md:grid-cols-2">
         <div>
           <label className="mb-2 block text-sm font-semibold text-slate-700">
             First Name
@@ -75,7 +76,7 @@ try {
             value={formData.firstName}
             onChange={handleChange}
             placeholder="Abdul"
-            className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-200"
+            className="w-full rounded-xl border border-slate-300 px-4 py-3.5 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-200"
           />
         </div>
 
@@ -90,7 +91,7 @@ try {
             value={formData.lastName}
             onChange={handleChange}
             placeholder="Majid"
-            className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-200"
+            className="w-full rounded-xl border border-slate-300 px-4 py-3.5 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-200"
           />
         </div>
 
@@ -107,7 +108,7 @@ try {
           value={formData.email}
           onChange={handleChange}
           placeholder="you@example.com"
-          className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-200"
+          className="w-full rounded-xl border border-slate-300 px-4 py-3.5 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-200"
         />
       </div>
 
@@ -122,7 +123,7 @@ try {
           value={formData.phone}
           onChange={handleChange}
           placeholder="+91 XXXXX XXXXX"
-          className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-200"
+          className="w-full rounded-xl border border-slate-300 px-4 py-3.5 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-200"
         />
       </div>
 
@@ -139,15 +140,19 @@ try {
             value={formData.password}
             onChange={handleChange}
             placeholder="Create a password"
-            className="w-full rounded-xl border border-slate-300 px-4 py-3 pr-16 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-200"
+            className="w-full rounded-xl border border-slate-300 px-4 py-3.5 pr-16 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-200"
           />
 
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-medium text-blue-600"
+           className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 transition hover:text-blue-600"
           >
-            {showPassword ? "Hide" : "Show"}
+            {showPassword ? (
+              <EyeOff size={20} />
+            ) : (
+              <Eye size={20} />
+            )}
           </button>
 
         </div>
@@ -163,12 +168,12 @@ try {
 
       </div>
 
-      <button
-        type="submit"
-        className="w-full rounded-xl bg-blue-600 py-3 font-semibold text-white transition hover:bg-blue-700"
+      <FixoraButton
+       type="submit"
+       loading={loading}
       >
-        {loading ? "Creating Account..." : "Create Account"}
-      </button>
+       Create Account
+      </FixoraButton>
 
       <p className="text-center text-sm text-slate-600">
         Already have an account?{" "}

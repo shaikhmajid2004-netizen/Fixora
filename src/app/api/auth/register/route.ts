@@ -44,7 +44,7 @@ export async function POST(request: Request) {
         { status: 409 }
       );
     }
-
+  
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 

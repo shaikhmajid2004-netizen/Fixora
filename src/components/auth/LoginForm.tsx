@@ -1,13 +1,54 @@
 "use client";
-
+import { toast } from "sonner";
 import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
+import FixoraButton from "@/components/ui/FixoraButton";
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    setLoading(true);
+
+    try {
+      // Login API integration will be added in next step.
+      const response = await fetch("/api/auth/login", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    email,
+    password,
+  }),
+});
+
+const data = await response.json();
+
+if (!response.ok) {
+  toast.error(data.message || "Login failed");
+  return;
+}
+
+toast.success("Welcome back to Fixora! 🎉");
+
+console.log(data);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
-    <form className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-6">
+
       {/* Email */}
+
       <div>
         <label className="mb-2 block text-sm font-semibold text-slate-700">
           Email Address
@@ -16,66 +57,85 @@ export default function LoginForm() {
         <input
           type="email"
           placeholder="you@example.com"
-          className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-200"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          className="w-full rounded-xl border border-slate-300 px-4 py-3.5 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-200"
         />
       </div>
 
       {/* Password */}
+
       <div>
         <label className="mb-2 block text-sm font-semibold text-slate-700">
           Password
         </label>
 
         <div className="relative">
+
           <input
             type={showPassword ? "text" : "password"}
             placeholder="Enter your password"
-            className="w-full rounded-xl border border-slate-300 px-4 py-3 pr-16 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-200"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className="w-full rounded-xl border border-slate-300 px-4 py-3.5 pr-14 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-200"
           />
 
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-medium text-blue-600"
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 transition hover:text-blue-600"
           >
-            {showPassword ? "Hide" : "Show"}
+            {showPassword ? (
+              <EyeOff size={20} />
+            ) : (
+              <Eye size={20} />
+            )}
           </button>
+
         </div>
       </div>
 
-      {/* Remember + Forgot */}
-      <div className="flex items-center justify-between text-sm">
-        <label className="flex items-center gap-2 text-slate-600">
+      {/* Remember */}
+
+      <div className="flex items-center justify-between">
+
+        <label className="flex items-center gap-2 text-sm text-slate-600">
           <input type="checkbox" />
           Remember Me
         </label>
 
         <button
           type="button"
-          className="font-medium text-blue-600 hover:underline"
+          className="text-sm font-semibold text-blue-600 hover:underline"
         >
           Forgot Password?
         </button>
+
       </div>
 
-      {/* Login Button */}
-      <button
+      {/* Button */}
+
+      <FixoraButton
         type="submit"
-        className="w-full rounded-xl bg-blue-600 py-3 font-semibold text-white transition hover:bg-blue-700"
+        loading={loading}
       >
         Sign In
-      </button>
+      </FixoraButton>
 
       {/* Register */}
+
       <p className="text-center text-sm text-slate-600">
-        Don't have an account?{" "}
-        <button
-          type="button"
+        Don&apos;t have an account?{" "}
+        <a
+          href="/register"
           className="font-semibold text-blue-600 hover:underline"
         >
           Create Account
-        </button>
+        </a>
       </p>
+
     </form>
   );
 }
