@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import { prisma } from "@/lib/prisma";
 import { loginSchema } from "@/lib/validation/login";
-
+import { createToken } from "@/lib/auth";
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -53,6 +53,11 @@ export async function POST(request: Request) {
         { status: 401 }
       );
     }
+    const token = await createToken({
+    id: user.id,
+    email: user.email,
+    role: user.role,
+});
 
     return NextResponse.json(
       {
