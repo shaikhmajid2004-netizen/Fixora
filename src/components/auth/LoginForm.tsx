@@ -32,13 +32,18 @@ export default function LoginForm() {
   }),
 });
 
-console.log("Status:", response.status);
-console.log("Content-Type:", response.headers.get("content-type"));
+const data = await response.json();
 
-const text = await response.text();
-console.log("Response:", text);
+if (!response.ok) {
+  toast.error(data.message || "Login failed");
+  return;
+}
 
-return;
+toast.success("Welcome back to Fixora! 🎉");
+
+setTimeout(() => {
+  router.push("/dashboard");
+}, 1200);
     } catch (error) {
   console.error(error);
   toast.error("Something went wrong. Please try again.");

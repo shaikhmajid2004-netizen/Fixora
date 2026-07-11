@@ -1,12 +1,6 @@
 import { Toaster } from "sonner";
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
-import "./globals.css";
-
-const plusJakarta = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  variable: "--font-plus-jakarta",
-});
+import "@fontsource/plus-jakarta-sans";
 
 export const metadata: Metadata = {
   title: "Fixora | One Platform. Every Service.",
@@ -20,8 +14,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={plusJakarta.variable}>
-      <body className="min-h-screen bg-white text-slate-900 antialiased">
+    <html lang="en">
+      <body
+  className="min-h-screen bg-white text-slate-900 antialiased"
+  style={{ fontFamily: '"Plus Jakarta Sans", sans-serif' }}
+>
         {children}
         <Toaster richColors position="top-right" />
       </body>
