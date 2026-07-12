@@ -33,10 +33,12 @@ export default function Navbar() {
 
         <nav className="hidden gap-8 font-medium text-slate-700 lg:flex">
 
-          <a href="#" className="transition hover:text-blue-600">
-            Services
-          </a>
-
+          <Link
+            href="/services"
+            className="transition duration-300 hover:text-blue-600"
+             >
+             Services
+</Link>
           <a href="#" className="transition hover:text-blue-600">
             Become a Professional
           </a>
@@ -62,9 +64,12 @@ export default function Navbar() {
   Login
 </Link>
 
-          <button className="rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-700 hover:shadow-lg">
+         <Link
+           href="/register"
+           className="rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-700 hover:shadow-lg"
+           >
             Get Started
-          </button>
+         </Link>
 
         </div>
 
