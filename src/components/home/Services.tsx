@@ -12,44 +12,63 @@ import {
 
 const services = [
   {
-    icon: Zap,
-    title: "Electrician",
-    description: "Professional electrical installation & repair",
-  },
+  icon: Zap,
+  title: "Electrician",
+  description: "Professional electrical installation & repair",
+  rating: "4.9",
+  time: "30 mins",
+  price: "Starts ₹199",
+  popular: true,
+  verified: true,
+},
   {
     icon: Wrench,
     title: "Plumber",
     description: "Leak fixing, fittings and maintenance",
+    popular: true,
+    verified: true,
   },
   {
     icon: Snowflake,
     title: "AC Repair",
     description: "Cooling, installation and servicing",
+    popular: true,
+    verified: true,
   },
   {
     icon: Car,
     title: "Car Mechanic",
     description: "Car repair and maintenance at your doorstep",
+    popular: true,
+    verified: true,
   },
   {
     icon: Bike,
     title: "Bike Service",
     description: "Complete bike servicing by professionals",
+    popular: true,
+    verified: true,
   },
   {
     icon: Laptop,
     title: "Laptop Repair",
     description: "Hardware and software troubleshooting",
+    popular: true,
+    verified: true,
   },
   {
     icon: Smartphone,
     title: "Mobile Repair",
     description: "Screen replacement and phone repair",
+    popular: true,
+    verified: true,
   },
   {
     icon: Sparkles,
     title: "Home Cleaning",
     description: "Deep cleaning by verified professionals",
+    popular: true,
+    verified: true,
   },
 ];
 
@@ -85,13 +104,45 @@ export default function Services() {
                   <Icon size={34} strokeWidth={2.2} />
                 </div>
 
-                <h3 className="mt-6 text-2xl font-bold text-slate-900">
-                  {service.title}
-                </h3>
+                <div className="mt-6 flex items-center justify-between">
+
+  <h3 className="text-2xl font-bold text-slate-900">
+    {service.title}
+  </h3>
+
+  {service.popular && (
+    <span className="rounded-full bg-orange-100 px-3 py-1 text-xs font-semibold text-orange-600">
+      🔥 Most Booked
+    </span>
+  )}
+
+</div>
 
                 <p className="mt-4 leading-7 text-slate-600">
                   {service.description}
                 </p>
+                <div className="mt-5 flex flex-col gap-2 text-sm">
+
+  <div className="flex items-center justify-between">
+    <span className="text-amber-500 font-semibold">
+      ⭐ {service.rating}
+    </span>
+
+    <span className="text-slate-500">
+      ⏱ {service.time}
+    </span>
+  </div>
+
+  <p className="font-semibold text-blue-600">
+    {service.price}
+  </p>
+  {service.verified && (
+  <p className="mt-2 text-sm font-medium text-green-600">
+    ✅ Verified Professional
+  </p>
+)}
+
+</div>
 
                 <button className="mt-8 flex items-center gap-2 font-semibold text-blue-600 transition group-hover:gap-3">
                   Book Now

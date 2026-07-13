@@ -1,3 +1,5 @@
+import ServiceCategories from "@/components/home/ServiceCategories";
+import SearchBar from "@/components/home/SearchBar";
 import Testimonials from "@/components/home/Testimonials";
 import Stats from "@/components/home/Stats";
 import WhyChoose from "@/components/home/WhyChoose";
@@ -7,13 +9,15 @@ import Hero from "@/components/home/Hero";
 
 export default function Home() {
   return (
-    <>
-      <Navbar />
-      <Hero />
-      <Services />
-      <WhyChoose />
-      <Stats />
-      <Testimonials />
-    </>
+   <>
+  <Navbar />
+<Hero />
+<SearchBar />
+<ServiceCategories />
+<Services />
+<WhyChoose />
+<Stats />
+<Testimonials />
+</>
   );
 }
